@@ -78,18 +78,16 @@ $(".time-block").each(function () {
   }
 });
 
-// $(".description").each(function () {
-//   localStorage.getItem($(this).parent().attr("id"));
-//});
-
+// retrieve localStorage
 function localStorageFunctions() {
   for (let index = 0; index < numbers.length; index++) {
     $("textarea")[index].value = localStorage.getItem(
-      "texarea" + String(index + 1)
+      "textarea" + String(index + 1)
     );
   }
 }
 
+//save data to localStorage
 $("button").on("click", function (event) {
   event.preventDefault();
   for (let index = 0; index < numbers.length; index++) {
@@ -100,17 +98,4 @@ $("button").on("click", function (event) {
   }
 });
 
-$("button").on("click", function (event) {
-  event.preventDefault();
-  for (let index = 0; index < numbers.length; index++) {
-    localStorage.setItem(
-      $("textarea")[index].value,
-      "textarea" + String(index + 1)
-    );
-  }
-});
-
 localStorageFunctions();
-
-//TODO make an object wth key time and text and push into object array, then store array in localStorgae
-//TODO json.parse to getItem
