@@ -3,11 +3,6 @@ var timeSlots = $("#timeSlots"); // use this to insert the time-blocks into the 
 var currentHour = parseInt(moment().format("H")); //use this to get the current hour
 var todayDate = $("#todayDate"); //use this to place today date in the header
 var saveIcon = `<i class="fas fa-save"></i>`; // use this to place the icon in the rows of the schedule
-var savedDescription = {
-  //use to hold data until saved to localStorage
-  date: "",
-  text: "",
-};
 
 // Display current day and time
 function displayDayTime() {
@@ -87,16 +82,25 @@ $(".description").each(function () {
 });
 
 function save(event) {
-  console.log("You clicked me!!!", event.target);
+  //console.log("You clicked me!!!", event.target);
   var savedDescription = $(event.target).prev().val();
   var savedTime = $(event.target).parent().data("time");
-  console.log(savedTime);
-  localStorage.setItem("key", JSON.stringify(savedDescription));
-  return savedDescription;
+  var testVar = savedDescription.concat(savedTime);
+  //console.log(testVar);
+  localStorage.setItem("task", JSON.stringify(testVar));
+  //var savedDataObj = JSON.parse(localStorage.getItem(testVar));
+  console.log(testVar);
+  //return stringified data to empty object below
+  return testVar;
 }
 
-var savedDescriptionArray = object.keys(savedDescription);
-console.log(savedDescriptionArray);
+//use to hold data until saved to localStorage
+var savedDataObj = [];
+
+//set variable to get saved data in obj
+var displaySavedObj = localStorage.getItem("savedDescriptionObj");
+console.log("displaySavedObj").JSON.parse(localStorage.getItem("savedDataObj"));
+//add function to display saved data into corresponding hourRow
 
 //TODO make an object wth key time and message and push into object array, then store array in localStorgae
 //TODO json.parse to getItem
