@@ -1,3 +1,6 @@
+Published URL: https://glo6al.github.io/task-scheduler-glo6al/
+Repo URL: https://github.com/glo6al/task-scheduler-glo6al.git
+
 This is the readme for my workday scheduler app. I created a function to display the current day and time, a function to color code the schedule based on the present time, and more functions to locally store and retrieve input data. I used javascript to build the hour rows dynamically and used bootstrap, fontawesome, and google API to style the page.
 
 I started by declaring variables that were later called in the different functions. Next, I built a function to display the current day and time. I set intervals to count by seconds and used moment.js to format the time.
