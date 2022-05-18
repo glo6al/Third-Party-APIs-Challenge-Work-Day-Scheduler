@@ -3,6 +3,8 @@ var timeSlots = $("#timeSlots"); // use this to insert the time-blocks into the 
 var currentHour = parseInt(moment().format("H")); //use this to get the current hour
 var todayDate = $("#todayDate"); //use this to place today date in the header
 var saveIcon = `<i class="fas fa-save"></i>`; // use this to place the icon in the rows of the schedule
+var numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+const saveBtn = document.querySelectorAll("button");
 
 // Display current day and time
 function displayDayTime() {
@@ -31,8 +33,8 @@ function buildSchedule() {
       var hourRow = `
           <div id="${i}" class= "row time-block" data-time="${i}">
               <div class="hour col-1">${i + " PM"}</div>
-              <textarea name="" id="" class="description col-10"></textarea>
-              <button type="button" class="btn btn-primary col-1 saveBtn" onclick="save(event)">${saveIcon}</button>
+              <textarea name="" id="${i}" class="description col-10"></textarea>
+              <button type="button" class="btn btn-primary col-1 saveBtn">${saveIcon}</button>
           </div>`;
       //append the newly created html into timeSlots
       $("#timeSlots").append(hourRow);
@@ -42,8 +44,8 @@ function buildSchedule() {
       var hourRow = `
                 <div id="${i}" class= "row time-block" data-time="${i}">
                     <div class="hour col-1">${i - 12 + " PM"}</div>
-                    <textarea name="" id="" class="description col-10"></textarea>
-                    <button type="button" class="btn btn-primary col-1 saveBtn" onclick="save(event)">${saveIcon}</button>
+                    <textarea name="" id="${i}" class="description col-10"></textarea>
+                    <button type="button" class="btn btn-primary col-1 saveBtn">${saveIcon}</button>
                 </div>`;
       //append the newly created html into timeSlots
       $("#timeSlots").append(hourRow);
@@ -51,8 +53,8 @@ function buildSchedule() {
       var hourRow = `
                 <div id="${i}" class= "row time-block" data-time="${i}">
                     <div class="hour col-1">${i + " AM"}</div>
-                    <textarea name="" id="" class="description col-10"></textarea>
-                    <button type="button" class="btn btn-primary col-1 saveBtn" onclick="save(event)">${saveIcon}</button>
+                    <textarea name="" id="${i}" class="description col-10"></textarea>
+                    <button type="button" class="btn btn-primary col-1 saveBtn">${saveIcon}</button>
                 </div>`;
       //append the newly created html into timeSlots
       $("#timeSlots").append(hourRow);
@@ -76,31 +78,39 @@ $(".time-block").each(function () {
   }
 });
 
-// Add event listener or onclick to save then save to localStorage
-$(".description").each(function () {
-  localStorage.getItem($(this).parent().attr("id"));
-});
+// $(".description").each(function () {
+//   localStorage.getItem($(this).parent().attr("id"));
+//});
 
-function save(event) {
-  //console.log("You clicked me!!!", event.target);
-  var savedDescription = $(event.target).prev().val();
-  var savedTime = $(event.target).parent().data("time");
-  var testVar = savedDescription.concat(savedTime);
-  //console.log(testVar);
-  localStorage.setItem("task", JSON.stringify(testVar));
-  //var savedDataObj = JSON.parse(localStorage.getItem(testVar));
-  console.log(testVar);
-  //return stringified data to empty object below
-  return testVar;
+function localStorageFunctions() {
+  for (let index = 0; index < numbers.length; index++) {
+    $("textarea")[index].value = localStorage.getItem(
+      "texarea" + String(index + 1)
+    );
+  }
 }
 
-//use to hold data until saved to localStorage
-var savedDataObj = [];
+$("button").on("click", function (event) {
+  event.preventDefault();
+  for (let index = 0; index < numbers.length; index++) {
+    localStorage.setItem(
+      "textarea" + String(index + 1),
+      $("textarea")[index].value
+    );
+  }
+});
 
-//set variable to get saved data in obj
-var displaySavedObj = localStorage.getItem("savedDescriptionObj");
-console.log("displaySavedObj").JSON.parse(localStorage.getItem("savedDataObj"));
-//add function to display saved data into corresponding hourRow
+$("button").on("click", function (event) {
+  event.preventDefault();
+  for (let index = 0; index < numbers.length; index++) {
+    localStorage.setItem(
+      $("textarea")[index].value,
+      "textarea" + String(index + 1)
+    );
+  }
+});
 
-//TODO make an object wth key time and message and push into object array, then store array in localStorgae
+localStorageFunctions();
+
+//TODO make an object wth key time and text and push into object array, then store array in localStorgae
 //TODO json.parse to getItem
